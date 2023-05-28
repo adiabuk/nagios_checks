@@ -1,0 +1,50 @@
+#!/bin/bash
+#
+# This script connects to a site via curl and searches for a string in the web page.
+# If the string is not found it throws out an error and Nagios exit is set to 'critical'.
+##
+# Ver. 0.1a
+# Last modified by Roberto Carraro on 20150528
+
+# Declare constants
+# The following ones will be used as exit codes by Nagios
+readonly EXIT_OK=0
+# Warning is not used in this script so far
+readonly EXIT_WARNING=1
+readonly EXIT_CRITICAL=2
+readonly EXIT_UNKNOWN=3
+
+print_usage() {
+        echo ""
+        echo "This plugin checks the content of a web page."
+        echo "If a certaing text string is not found Nagios exit is set to 'critical'."
+        echo ""
+        echo "Usage: $0 <URL> <text string to search>"
+        echo ""
+        exit 3
+}
+
+if [ $# -lt 2 ] ; then
+ print_usage
+fi
+
+# Connect to URL and search for text string (don't output anything)
+# We are only interested in the exit state of the grep command, not the output of curl
+curl $1 2>/dev/null| grep -iE "$2|$3" > /dev/null
+
+# The exit state of the last row is evaluated '0' if True or '1' if False and is intercepted by '$?'
+if [[ $? -eq 1 ]] ; then
+        # No string found or site down or site non reachable
+        echo "CRITICAL: There is a problem with the site or string <$2> not found."
+        # Throws out the exit code which will be handled by Nagios as Critical
+        exit $EXIT_CRITICAL
+else
+        # String found and site up and reachable
+        echo "OK: Site up and string <$2> found."
+        # Throws out the exit code which will be handled by Nagios as Ok
+        exit $EXIT_OK
+fi
+
+# Something's wrong; catch-all
+echo "UNKNOWN"
+exit $EXIT_UNKNOWN

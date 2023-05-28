@@ -1,0 +1,9 @@
+#!/usr/bin/env bash
+
+ports=`nmap -sT -P0 $1 | grep -w open|grep -v 2222|wc -l`
+echo "Open ports: $ports"
+if [[ "$ports" == 0 ]]; then
+    exit 0
+else
+    exit 2
+fi

@@ -1,0 +1,38 @@
+#!/usr/bin/env python3
+
+import argparse
+import requests
+import time
+import sys
+
+
+def main():
+
+    parser = argparse.ArgumentParser()
+    parser.add_argument('-u', '--url', type=str, required=True)
+    parser.add_argument('-c', '--critical', type=str, required=True)
+    parser.add_argument('-w', '--warning', type=str, required=True)
+    args = parser.parse_args()
+    
+    
+    path = '/recent?pair=BTCUSDT'
+    ji = requests.get(args.url + path)
+    
+    output = ji.json()['openTime']
+    epoch = int(int(output)/1000)
+    current = int(time.time())
+    
+    diff = abs(current - epoch)
+    
+    if diff > int(args.critical):
+        print("CRITICAL - epoch is {} seconds old".format(diff))
+        sys.exit(2)
+    elif diff > int(args.warning):
+        print("WARNING - epoch is {} seconds old".format(diff))
+        sys.exit(1)
+    else:
+        print("OK - epoch is {} seconds old".format(diff))
+        sys.exit(0)
+
+if __name__ == '__main__':
+    main()
