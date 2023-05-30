@@ -13,17 +13,20 @@ def main():
     parser.add_argument('-c', '--critical', type=str, required=True)
     parser.add_argument('-w', '--warning', type=str, required=True)
     args = parser.parse_args()
-    
-    
+
     path = '/recent?pair=BTCUSDT'
-    ji = requests.get(args.url + path)
-    
+    try:
+        ji = requests.get(args.url + path)
+    except Exception as exc:
+        sys.stderr.write("Unable to connect: %s" % str(exc))
+        sys.exit(3)
+
     output = ji.json()['openTime']
     epoch = int(int(output)/1000)
     current = int(time.time())
-    
+
     diff = abs(current - epoch)
-    
+
     if diff > int(args.critical):
         print("CRITICAL - epoch is {} seconds old".format(diff))
         sys.exit(2)
