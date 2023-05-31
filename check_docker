@@ -1,0 +1,23 @@
+#!/usr/bin/env bash
+
+# Check for unhealthy or restaring docker containers
+
+count=$(docker ps | grep -iE "unhealthy|restarting"|wc -l)
+
+re='^[0-9]+$'
+if ! [[ $count =~ $re ]] ; then
+    echo "UNKNOWN: Unable to get container list"
+    exit 3
+elif [ "$count" -gt "1" ]; then
+    echo CRITICAL: $count unhealthy or restarting containers
+    exit 2
+elif [ "$count" -gt "0" ]; then
+    echo WARNING: $count unhealthy or restarting containers
+    exit 1
+elif [ "$count" -eq "0" ]; then
+    echo OK: $count unhealthy or restarting containers
+    exit 0
+else
+    echo "UNKNOWN: Unable to get container list"
+    exit 3
+fi
