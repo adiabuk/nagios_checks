@@ -1,9 +1,9 @@
 #!/usr/bin/env python3
 
-import argparse
-import requests
 import time
 import sys
+import argparse
+import requests
 
 
 def main():
@@ -16,12 +16,12 @@ def main():
 
     path = '/recent?pair=BTCUSDT'
     try:
-        ji = requests.get(args.url + path)
+        data = requests.get(args.url + path)
     except Exception as exc:
         sys.stderr.write("Unable to connect: %s" % str(exc))
         sys.exit(3)
 
-    output = ji.json()['openTime']
+    output = data.json()['openTime']
     epoch = int(int(output)/1000)
     current = int(time.time())
 
