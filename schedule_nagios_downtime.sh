@@ -31,9 +31,9 @@ echo ""  # newline after prompt
 
 
 # The following is urlencoded already
-STARTDATE=`date "+%d-%m-%Y+%H%%3A%M%%3A%S"`
+STARTDATE=`date "+%m-%d-%Y+%H%%3A%M%%3A%S" -d "1 min"`
 # This gives us the date/time X minutes from now
-ENDDATE=`date "+%d-%m-%Y+%H%%3A%M%%3A%S" -d "$MINUTES min"`
+ENDDATE=`date "+%m-%d-%Y+%H%%3A%M%%3A%S" -d "$MINUTES min"`
 #echo $STARTDATE $ENDDATE
 curl --silent --show-error \
     --data cmd_typ=55 \
