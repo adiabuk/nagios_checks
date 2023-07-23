@@ -1,7 +1,9 @@
 #!/usr/bin/env bash
 
 function usage {
-  echo "Usage: $0 <cpu|mem> <threshold> <warning_count> <critical_count>"
+  echo "Usage: $0 <cpu_perc|mem_mb> <threshold> <warning_count> <critical_count>"
+  echo
+  echo "eg. ./$0 mem_perc 1000 2 3"
   exit 3
 }
 
@@ -12,16 +14,16 @@ critical_count=$4
 
 [[ -z "$critical_count" ]] && usage
 
-if [[ "$metric" == "cpu" ]]; then
+if [[ "$metric" == "cpu_perc" ]]; then
     result=`docker stats --no-stream --format "{{.CPUPerc}}"|sort -h|awk -v myvar=$threshold  -F% '$1 > myvar {print}'|wc -l`
-elif [[ "$metric" == "mem" ]]; then
+elif [[ "$metric" == "mem_mb" ]]; then
     result=`docker stats --no-stream --format "{{.MemUsage}}"| awk '{ if(index($1, "GiB")) {gsub("GiB","",$1); print $1 * 1000} else {gsub("MiB","",$1); print $1}}'|sort -hk1| awk -v myvar=$threshold '$1 > myvar {print}'| wc -l`
 fi
 
-if [[ "$result" -gt "$critical_count" ]]; then
+if [[ "$result" -ge "$critical_count" ]]; then
     echo CRITICAL $result containers over $threshold
     exit 2
-elif [[ "$result" -gt "$warning_count" ]]; then
+elif [[ "$result" -ge "$warning_count" ]]; then
     echo WARNING $result containers over $threshold
     exit 1
 elif [[ "$result" -lt "$warning_count" ]]; then
