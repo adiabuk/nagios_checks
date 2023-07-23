@@ -1,0 +1,25 @@
+#!/usr/bin/env bash
+
+# Check OOMs in last 100 lines of dmesg
+
+lines=$(dmesg -T |tail -100 | grep "Killed process"|wc -l)
+
+if [[ "$lines" -gt "2" ]]; then
+  echo CRITICAL: $lines OOM found in dmesg
+  exit 2
+elif [[ "$lines" -gt "0" ]]; then
+  echo WARNING: $lines OOM found in dmesg
+  exit 1
+elif [[ "$lines" -eq "0" ]]; then
+  echo OK: no recent OOMs found
+  exit 0
+else
+  echo UNKNOWN Unable to establish OOM state
+  exit 3
+fi
+
+
+
+
+
+
