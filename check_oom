@@ -2,12 +2,21 @@
 
 # Check OOMs in last 100 lines of dmesg
 
-lines=$(dmesg -T |tail -100 | grep "Killed process"|wc -l)
+function usage {
+  echo "Usage: $0 <warning_count> <critical_count>"
+  exit 3
+}
 
-if [[ "$lines" -gt "2" ]]; then
+warning=$1
+critical=$2
+[[ -z "$critical" ]] && usage
+
+lines=$(dmesg -T |tail -100 | grep "Killed process"|wc -l)
+echo $lines
+if [[ "$lines" -ge "$critical" ]]; then
   echo CRITICAL: $lines OOM found in dmesg
   exit 2
-elif [[ "$lines" -gt "0" ]]; then
+elif [[ "$lines" -ge "$warning" ]]; then
   echo WARNING: $lines OOM found in dmesg
   exit 1
 elif [[ "$lines" -eq "0" ]]; then
