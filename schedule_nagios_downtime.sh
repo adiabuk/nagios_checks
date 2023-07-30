@@ -17,7 +17,8 @@ fi
 
 HOST=$1
 NAGURL=http://10.8.0.1:81/nagios/cgi-bin/cmd.cgi
-MINUTES=30
+MINUTES=$4
+COMMENT=$5
 
 echo Scheduling downtime on nagios for $HOST
 
@@ -40,7 +41,7 @@ curl --silent --show-error \
     --data cmd_mod=2 \
     --data host=$HOST \
     --data "com_author=$USER" \
-    --data "com_data=scheduled+reboot" \
+    --data "com_data=$COMMENT" \
     --data trigger=0 \
     --data "start_time=$STARTDATE" \
     --data "end_time=$ENDDATE" \
