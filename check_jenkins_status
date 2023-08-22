@@ -98,7 +98,7 @@ foreach my $job (@$jobs) {
     trace( 'job: ', $job->{'name'}, ' color=', $job->{'color'}, "\n" );
     $disabled_jobs++ if $job->{'color'} eq 'disabled';
     $passed_jobs++   if $job->{'color'} eq 'blue';
-    $failed_jobs++   if $job->{'color'} eq 'red';
+    $failed_jobs++   if ($job->{'color'} eq 'red' or $job->{'color'} eq 'yellow');
 }
 my $arctive_jobs = $jobs_count - $disabled_jobs;
 my $perfdata     = '';
