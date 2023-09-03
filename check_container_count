@@ -4,7 +4,7 @@ function usage {
   echo "Container count"
   echo "Usage: $0 <warning_count> <critical_count>"
   echo
-  echo "eg. ./$0 mem_perc 1000 2 3"
+  echo "eg. ./$0 200 500"
   exit 3
 }
 
