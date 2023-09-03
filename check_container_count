@@ -1,0 +1,35 @@
+#!/usr/bin/env bash
+
+function usage {
+  echo "Container count"
+  echo "Usage: $0 <warning_count> <critical_count>"
+  echo
+  echo "eg. ./$0 mem_perc 1000 2 3"
+  exit 3
+}
+
+warning_count=$1
+critical_count=$2
+
+[[ -z "$critical_count" ]] && usage
+
+containers=`docker ps -a`
+running=`echo "$containers"|grep Up|wc -l`
+total=`echo "$containers"|wc -l`
+
+if [[ "$running" -ge "$critical_count" ]]; then
+    result=CRITICAL
+    exit=2
+elif [[ "$running" -ge "$warning_count" ]]; then
+    result=WARNING
+    exit=1
+elif [[ "$running" -lt "$warning_count" ]]; then
+    result=OK
+    exit=0
+else
+    result=UNKNOWN
+    exit=3
+fi
+
+echo "$result $running running containers,$total total|running=$running,total=$total"
+exit $exit
