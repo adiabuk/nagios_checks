@@ -21,11 +21,11 @@ def main():
         sys.stderr.write("Unable to connect: %s" % str(exc))
         sys.exit(3)
 
-    output = data.json()['openTime']
+    output = data.json()['closeTime']
     epoch = int(int(output)/1000)
     current = int(time.time())
 
-    diff = abs(current - epoch)
+    diff = current - epoch
 
     if diff > int(args.critical):
         print("CRITICAL - epoch is {} seconds old".format(diff))
