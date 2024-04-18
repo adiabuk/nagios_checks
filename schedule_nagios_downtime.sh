@@ -16,7 +16,7 @@ elif [ $# -ge 2 ]; then
 fi
 
 HOST=$1
-NAGURL=http://nagios/nagios/cgi-bin/cmd.cgi
+NAGURL=http://www.nagios.amrox.loc/nagios/cgi-bin/cmd.cgi
 MINUTES=$4
 COMMENT=$5
 
