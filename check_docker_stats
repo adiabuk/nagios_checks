@@ -17,7 +17,7 @@ critical_count=$4
 if [[ "$metric" == "cpu_perc" ]]; then
     result=`docker stats --no-stream --format "{{.CPUPerc}}"|sort -h|awk -v myvar=$threshold  -F% '$1 > myvar {print}'|wc -l`
 elif [[ "$metric" == "mem_mb" ]]; then
-    result=`docker stats --no-stream --format "{{.MemUsage}}"| awk '{ if(index($1, "GiB")) {gsub("GiB","",$1); print $1 * 1000} else {gsub("MiB","",$1); print $1}}'|sort -hk1| awk -v myvar=$threshold '$1 > myvar {print}'| wc -l`
+    result=`docker stats --no-stream --format "{{.MemUsage}}"| awk '{ if(index($1, "GiB")) {gsub("GiB","",$1); print $1 * 1000} else {gsub("MiB","",$1); print $1}}'|sort -hk1| grep -v KiB|awk -v myvar=$threshold '$1 > myvar {print}'| wc -l`
 fi
 
 if [[ "$result" -ge "$critical_count" ]]; then
