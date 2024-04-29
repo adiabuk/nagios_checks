@@ -1,0 +1,27 @@
+#!/usr/bin/env bash
+#
+# Check number of recently descovered servers online from text file output
+#
+
+value=`cat /var/local/server_count.txt`
+WARN=$1
+CRIT=$2
+
+if [[ ! "$value" =~ ^[0-9]+$ ]]; then
+  echo "UNKNOWN: non-numerical output"
+  exit 3
+elif [[ "$value" -gt "$CRIT" ]]; then
+  echo "CRITICAL: $value servers online | online=$value"
+  exit 2
+elif [[ "$value" -gt "$WARN" ]]; then
+  echo "WARNING: $value servers online | online=$value"
+  exit 1
+elif [[ "$value" -le "$WARN" ]]; then
+  echo "OK $value servers online | online=$value"
+  exit 0
+else:
+  echo "UNKNOWN servers online"
+  exit 3
+fi
+
+
