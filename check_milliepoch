@@ -7,7 +7,6 @@ import requests
 
 
 def main():
-
     parser = argparse.ArgumentParser()
     parser.add_argument('-u', '--url', type=str, required=True)
     parser.add_argument('-c', '--critical', type=str, required=True)
@@ -17,9 +16,9 @@ def main():
     path = '/recent?pair=BTCUSDT'
     try:
         data = requests.get(args.url + path)
-    except Exception as exc:
-        sys.stderr.write("Unable to connect: %s" % str(exc))
-        sys.exit(3)
+    except requests.ConnectionError as exc:
+        sys.stderr.write("CRITICAL - Unable to connect: %s" % str(exc))
+        sys.exit(2)
 
     output = data.json()['closeTime']
     epoch = int(int(output)/1000)
