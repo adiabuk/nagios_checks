@@ -11,7 +11,7 @@ warning=$1
 critical=$2
 [[ -z "$critical" ]] && usage
 
-lines=$(dmesg -T |tail -100 | grep "Killed process"|wc -l)
+lines=$(sudo dmesg -T |tail -100 | grep "Killed process"|wc -l)
 echo $lines
 if [[ "$lines" -ge "$critical" ]]; then
   echo CRITICAL: $lines OOM found in dmesg
@@ -26,9 +26,3 @@ else
   echo UNKNOWN Unable to establish OOM state
   exit 3
 fi
-
-
-
-
-
-
