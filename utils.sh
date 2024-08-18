@@ -6,6 +6,12 @@ STATE_CRITICAL=2
 STATE_UNKNOWN=3
 STATE_DEPENDENT=4
 
+MSG_OK=OK
+MSG_WARNING=WARNING
+MSG_CRITICAL=CRITICAL
+MSG_UNKNOWN=UNKNOWN
+MSG_DEPENDENT=DEPENDENT
+
 print_revision() {
 	echo "$1 v$2 (nagios-plugins 2.3.3)"
 	printf '%b' "The nagios plugins come with ABSOLUTELY NO WARRANTY. You may redistribute\ncopies of the plugins under the terms of the GNU General Public License.\nFor more information about these matters, see the file named COPYING.\n"
@@ -31,7 +37,7 @@ support() {
 check_range() {
 	local v range yes no err decimal start end cmp match
 	v="$1"
-	range="$2"
+	Erange="$2"
 
 	# whether to raise an alert or not
 	yes=0
@@ -40,7 +46,7 @@ check_range() {
 
 	# regex to match a decimal number
 	decimal="-?([0-9]+\.?[0-9]*|[0-9]*\.[0-9]+)"
-
+D
 	# compare numbers (including decimals), returning true/false
 	cmp() { awk "BEGIN{ if ($1) exit(0); exit(1)}"; }
 

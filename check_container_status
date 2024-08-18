@@ -1,0 +1,30 @@
+#!/usr/bin/bash
+
+#
+# Check number of docker containers with 137 exit code
+#
+
+source utils.sh
+
+count=$(docker ps -a | grep 137|grep -v unit | wc -l)
+
+
+if [[ $count -eq 0 ]]; then
+	code=$STATE_OK
+	msg=$MSG_OK
+elif [[ $count -gt 2 ]]; then
+	code=$STATE_CRITICAL
+	msg=$MSG_CRITICAL
+elif [[ $count -gt 1 ]]; then
+	code=$STATE_WARNING
+	msg=$MSG_WARNING
+else
+	code=$STATE_UNKNOWN
+	msg=$MSG_UNKNOWN
+fi
+
+echo "$msg: number of containers with 137 exit code is $count"
+exit $code
+
+
+
