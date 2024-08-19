@@ -1,0 +1,9 @@
+#!/usr/bin/bash
+
+#
+# clear nagios alert using NCSA
+#
+# Usage ./clear_alert <hostname> <service_name>
+#
+
+echo -e "$1\t$2\t0\tOK: cleared by nrpe\n" | /opt/nagios_checks/send_nsca -H nagios.amrox.loc -c /opt/nagios_checks/send_nsca.cfg
