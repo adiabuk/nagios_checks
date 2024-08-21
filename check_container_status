@@ -7,8 +7,7 @@
 SOURCE=$(dirname $BASH_SOURCE[0])
 source $SOURCE/utils.sh
 
-count=$(docker ps -a | grep 137|grep -v unit | wc -l)
-
+count=$(docker ps -a --format "{{.Status }}"|grep 137|grep -v unit|wc -l)
 
 if [[ $count -eq 0 ]]; then
 	code=$STATE_OK
@@ -16,7 +15,7 @@ if [[ $count -eq 0 ]]; then
 elif [[ $count -gt 2 ]]; then
 	code=$STATE_CRITICAL
 	msg=$MSG_CRITICAL
-elif [[ $count -gt 1 ]]; then
+elif [[ $count -gt 0 ]]; then
 	code=$STATE_WARNING
 	msg=$MSG_WARNING
 else
