@@ -14,7 +14,7 @@ critical_count=$2
 
 [[ -z "$critical_count" ]] && usage
 
-count=`docker ps --format="{{.Image}} {{.Names}} {{.Status}} "|grep -E 'weeks|months' |awk '$1~/amrox/ {print}'|grep -vE 'nagios|nrpe|cron'|wc -l`
+count=`docker ps --format="{{.Image}} {{.Names}} {{.Status}} "|grep -E 'weeks|months' |awk '$1~/amrox/ {print}'|grep -vE 'nagios|nrpe|cron|nginx'|wc -l`
 
 if [[ "$count" -ge "$critical_count" ]]; then
     result=CRITICAL
