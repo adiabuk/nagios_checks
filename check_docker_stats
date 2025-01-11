@@ -21,16 +21,16 @@ elif [[ "$metric" == "mem_mb" ]]; then
 fi
 
 if [[ "$result" -ge "$critical_count" ]]; then
-    echo CRITICAL $result containers over $threshold
+    echo "CRITICAL $result containers over $threshold|result=$result;$warning_count;$critical_count;;"
     exit 2
 elif [[ "$result" -ge "$warning_count" ]]; then
-    echo WARNING $result containers over $threshold
+    echo "WARNING $result containers over $threshold|result=$result;$warning_count;$critical_count;;"
     exit 1
 elif [[ "$result" -lt "$warning_count" ]]; then
-    echo OK $result container over $threshold
+    echo "OK $result container over $threshold|result=$result;$warning_count;$critical_count;;"
     exit 0
 else
-    echo UNKNOWN
+    echo "UNKNOWN"
     exit 3
 fi
 
