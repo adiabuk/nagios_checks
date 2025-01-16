@@ -171,7 +171,7 @@ if [ "$nagiosServiceOrHost" == "host" ]; then
                   \"author_icon\": \"${webhookIcon}\", \
                   \"author_link\": \"http://${nagiosHost}/nagios\", \
                   \"title\": \"${nagiosNotificationType}: ${nagiosHostAlias} IS ${nagiosHostState}\", \
-                  \"title_link\": \"https://${nagiosHost}/nagios/cgi-bin/status.cgi?host=${nagiosHostAlias}\" \
+                  \"title_link\": \"http://${nagiosHost}/nagios/cgi-bin/status.cgi?host=${nagiosHostAlias}\" \
               } \
           ] \
       }" ${webhookURL} $debugSwitch
@@ -216,7 +216,7 @@ elif [ "$nagiosServiceOrHost" == "service" ]; then
                   \"author_icon\": \"${webhookIcon}\", \
                   \"author_link\": \"http://${nagiosHost}/nagios\", \
                   \"title\": \"${nagiosNotificationType}: ${nagiosHostAlias} - ${nagiosServiceDesc} IS ${nagiosServiceState}\", \
-                  \"title_link\": \"https://${nagiosHost}/nagios/cgi-bin/status.cgi?host=${nagiosHostAlias}\" \
+                  \"title_link\": \"http://${nagiosHost}/nagios/cgi-bin/status.cgi?host=${nagiosHostAlias}\" \
               } \
           ] \
       }" ${webhookURL} $debugSwitch
