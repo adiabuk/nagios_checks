@@ -30,7 +30,7 @@ fi
 
 # Connect to URL and search for text string (don't output anything)
 # We are only interested in the exit state of the grep command, not the output of curl
-curl $1 2>/dev/null| grep -iE "$2|$3" > /dev/null
+curl $1 2>/dev/null| grep -i "$2" > /dev/null
 
 # The exit state of the last row is evaluated '0' if True or '1' if False and is intercepted by '$?'
 if [[ $? -eq 1 ]] ; then
