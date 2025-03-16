@@ -1,0 +1,13 @@
+#!/usr/bin/env bash
+
+#
+# Small check to script internet access by accessing google
+#
+
+result=$(wget --spider --quiet http://google.com; echo $?)
+
+if [[ "$result" -ne 0 ]]; then
+    echo "CRITICAL: something went wrong trying to access an external site using DNS"
+    exit 2
+fi
+echo OK
