@@ -2,10 +2,13 @@
 
 # Check for unhealthy or restaring docker containers
 
+re='^[0-9]+$'
 count=$(docker ps | grep -iE "unhealthy|restarting"|wc -l)
 
-re='^[0-9]+$'
-if ! [[ $count =~ $re ]] ; then
+if [[ ${PIPESTATUS[0]} != 0 ]]; then
+  echo "UNKNOWN: error running docker command"
+  exit 3
+elif ! [[ $count =~ $re ]] ; then
     echo "UNKNOWN: Unable to get container list"
     exit 3
 elif [ "$count" -gt "1" ]; then
