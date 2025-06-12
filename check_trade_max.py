@@ -16,8 +16,8 @@ PROMETHEUS_URL = 'http://prometheus:9090/api/v1/query'
 QUERY = 'sum({__name__=~"open_net_perc.*%s_%s"})' %(DIRECTION, ENV)
 
 # Define the warning and critical thresholds
-WARNING_THRESHOLD = 100
-CRITICAL_THRESHOLD = 200
+WARNING_THRESHOLD = 50
+CRITICAL_THRESHOLD = 100
 
 def main():
     try:
