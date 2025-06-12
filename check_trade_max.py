@@ -28,13 +28,13 @@ def main():
         if data['status'] == 'success' and data['data']['result']:
             value = round(float(data['data']['result'][0]['value'][1]), 2)
             if value >= CRITICAL_THRESHOLD:
-                print(f"CRITICAL: Value is {value};value={value};{WARNING_THRESHOLD};{CRITICAL_THRESHOLD};0;400")
+                print(f"CRITICAL: Value is {value}|value={value};{WARNING_THRESHOLD};{CRITICAL_THRESHOLD};0;400")
                 sys.exit(2)
             elif value >= WARNING_THRESHOLD:
-                print(f"WARNING: Value is {value};value={value};{WARNING_THRESHOLD};{CRITICAL_THRESHOLD};0;400")
+                print(f"WARNING: Value is {value}|value={value};{WARNING_THRESHOLD};{CRITICAL_THRESHOLD};0;400")
                 sys.exit(1)
             else:
-                print(f"OK: Value is {value};value={value};{WARNING_THRESHOLD};{CRITICAL_THRESHOLD};0;400")
+                print(f"OK: Value is {value}|value={value};{WARNING_THRESHOLD};{CRITICAL_THRESHOLD};0;400")
                 sys.exit(0)
         else:
             print("UNKNOWN: No data or error in response")
