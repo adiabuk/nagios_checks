@@ -26,7 +26,7 @@ def main():
         data = response.json()
 
         if data['status'] == 'success' and data['data']['result']:
-            value = float(data['data']['result'][0]['value'][1])
+            value = round(float(data['data']['result'][0]['value'][1]), 2)
             if value >= CRITICAL_THRESHOLD:
                 print(f"CRITICAL: Value is {value};value={value};{WARNING_THRESHOLD};{CRITICAL_THRESHOLD};0;400")
                 sys.exit(2)
