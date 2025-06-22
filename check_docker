@@ -1,11 +1,10 @@
 #!/usr/bin/env bash
 
 # Check for unhealthy or restaring docker containers
-set -o pipefail
 re='^[0-9]+$'
 count=$(docker ps | grep -iE "unhealthy|restarting"|wc -l)
-
-if [[ ${PIPESTATUS[0]} != 0 ]]; then
+docker ps &> /dev/null
+if [[ $? != 0 ]]; then
   echo "UNKNOWN: error running docker command"
   exit 3
 elif ! [[ $count =~ $re ]] ; then
