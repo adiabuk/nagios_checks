@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 
 # Check for unhealthy or restaring docker containers
-
+set -o pipefail
 re='^[0-9]+$'
 count=$(docker ps | grep -iE "unhealthy|restarting"|wc -l)
 
