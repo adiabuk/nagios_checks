@@ -37,8 +37,10 @@ def main():
                 print(f"OK: Value is {value}|value={value};{WARNING_THRESHOLD};{CRITICAL_THRESHOLD};0;400")
                 sys.exit(0)
         else:
-            print("UNKNOWN: No data or error in response")
-            sys.exit(3)
+            # no data, defaults to 0
+            value = 0
+            print(f"OK: Value is {value}|value={value};{WARNING_THRESHOLD};{CRITICAL_THRESHOLD};0;400")
+            sys.exit(0)
     except requests.exceptions.RequestException as e:
         print(f"UNKNOWN: Error fetching data - {e}")
         sys.exit(3)
